@@ -10,6 +10,7 @@ class ChessBoard{
         }
         this.board = Chessboard(boardDivID, this.config)
         this.game =  new Chess()
+        this.AI = new ChessBot(this.game, this.board)
     }
 
     onMoveEnd = (oldPos, newPos) => {
@@ -42,6 +43,9 @@ class ChessBoard{
 
         // Log the move
         console.log(move)
+        setTimeout(() => {
+            this.AI.makeBestMove()
+        }, 500)
     }
 }
 
