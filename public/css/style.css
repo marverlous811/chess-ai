@@ -1,0 +1,38 @@
+.game-play{
+    display: flex;
+}
+
+.game-play #myBoard{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.game-play #chess-log {
+    display: flex;
+}
+
+.game-play #chess-log #human{
+    padding: 0 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.game-play #chess-log #AI{
+    padding: 0 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.game-play #chess-log #human ul, 
+.game-play #chess-log #AI ul{
+    padding: 0
+}
+
+.game-play #chess-log #human li, 
+.game-play #chess-log #AI li {
+    padding: 5 0
+}

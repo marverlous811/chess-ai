@@ -32,7 +32,7 @@ class ChessBoard{
     };
 
     onDrop = (source, target) => {
-        var move = this.game.move({
+        let move = this.game.move({
             from: source,
             to: target,
             promotion: 'q' // NOTE: always promote to a queen for example simplicity
@@ -43,6 +43,7 @@ class ChessBoard{
 
         // Log the move
         console.log(move)
+        renderForHuman(this.game.history())
         setTimeout(() => {
             this.AI.makeBestMove()
         }, 500)

@@ -3,16 +3,24 @@ class ChessBot {
         this.game = game
         this.board = board
         this.type = type
+        this.timeThinking = []
 
         console.log("bot type...",type)
     }
 
     makeBestMove = () => {
+
+        const start = Date.now()
         let bestMove = this.getBestMove(this.game)
+        const end = Date.now()
+        const d = end - start
+        this.timeThinking.push(d)
+        
+        renderForAI(bestMove, d)
         this.game.move(bestMove)
         this.board.position(this.game.fen())
         if (this.game.game_over()){
-            console.log("game over")
+            console.log("game over ", this.timeThinking)
         }
     }
 
