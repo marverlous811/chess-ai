@@ -10,7 +10,7 @@ class ChessBoard{
         }
         this.board = Chessboard(boardDivID, this.config)
         this.game =  new Chess()
-        this.AI = new ChessBot(this.game, this.board)
+        this.AI = new ChessBot(this.game, this.board, 'minimax')
     }
 
     onMoveEnd = (oldPos, newPos) => {
