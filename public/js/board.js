@@ -43,6 +43,7 @@ class ChessBoard{
 
         // Log the move
         console.log(move)
+        console.log(this.board.position(this.game.fen()))
         renderForHuman(this.game.history())
         setTimeout(() => {
             this.AI.makeBestMove()
