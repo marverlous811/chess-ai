@@ -1,10 +1,7 @@
-const express = require('express')
-const app = express()
+const { port } = require('./config')
+const { Socket } = require('./socket')
 
-const port = process.env.PORT || '5000'
-
-app.use(express.static('public'));
-
-app.listen(port, () => {
-    console.log("server is listening at port " + port)
-})
+;(async () => {
+    const socServer = new Socket(port)
+    await socServer.start()
+})()

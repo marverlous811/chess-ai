@@ -36,7 +36,7 @@ class ChessEngine(object):
             for move in board.legal_moves:
                 board.push(move)
                 score, submove = self.alphabeta(board, depth - 1, alpha, beta)
-                board.pop(move)
+                board.pop()
 
                 if score > alpha:
                     alpha = score
@@ -49,7 +49,7 @@ class ChessEngine(object):
             for move in board.legal_moves:
                 board.push(move)
                 score, submove = self.alphabeta(board, depth - 1, alpha, beta)
-                board.pop(move)
+                board.pop()
 
                 if score < beta:
                     beta = score
