@@ -13,8 +13,7 @@
 
 import subprocess
 from random import randint
-
-engineExec = "/Users/ows/Downloads/stockfish-10-mac/Mac/stockfish-10-64"
+from config import *
 
 
 class Match:
@@ -124,7 +123,7 @@ class Engine(subprocess.Popen):
 
     def __init__(self, depth=2, ponder=False, param={}, rand=False, rand_min=-10, rand_max=10):
         subprocess.Popen.__init__(self,
-                                  engineExec,
+                                  StockEnginePath,
                                   universal_newlines=True,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE, )

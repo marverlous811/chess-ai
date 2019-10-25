@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy as np
+import os
+from tensorflow.python.tools import freeze_graph
 from featureDB import *
 from config import *
 
@@ -61,7 +63,7 @@ class Model(object):
         input3 = tf.nn.relu6(output2)
         output3 = tf.add(tf.matmul(input3, w3), b3)
 
-        return tf.tanh(output3)
+        return tf.tanh(output3,  name="output")
     
     def runInput(self, feature):
         if(len(feature.shape) == 1):
@@ -114,6 +116,8 @@ class Model(object):
             print("not have data to test")
         print("Testing Error: ", self.sess.run(self.cost, feed_dict={self.x: self.testDB.getFeats(), self._y: self.testDB.getLabels()}))
 
+    def saveAsPb(self, directory):
+        tf.compat.v1.saved_model.simple_save(self.sess, directory, inputs={"x": self.x}, outputs={"y":self.y})
 
 if __name__ == "__main__":
     model = Model()
@@ -121,8 +125,5 @@ if __name__ == "__main__":
     testDB = FeatureDB(TestFeatPath, TestLabelPath)
     model.setDB(trainDB,testDB)
     model.train(batchSize=BatchSize, epochs=Epochs, displayStep=DisplayStep)
-    # print(model.runInput(trainDB.getFeats()))
     model.save(CheckpointPath)
-
-    # model.runInput(s.getBoardFeature())
-    # model.buildNetwork(s.getBoardFeature())
+    model.saveAsPb(ModelDir)
