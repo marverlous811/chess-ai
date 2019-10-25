@@ -7,6 +7,7 @@ import numpy as np
 import math
 from state import State
 from engine import SimpleStockFish
+from config import *
 
 values = {'1/2-1/2':0, '0-1':-1, '1-0':1}
 numberGame = 0
@@ -95,14 +96,14 @@ def sliceTestBoards(boardDB, trainOut, testOut, testRatio):
 if __name__ == "__main__":
     # pgn = open(os.path.join("data/KingBase2019-B20-B49.pgn"))
     # get_dataset(pgn)
-    load_data('fenDB.csv', limit=10)
+    load_data(FenDBPath, limit=TotalGame)
 
-    buildFeatureDB('fenDB.csv', 'gameDB/featDB.npy')
+    buildFeatureDB(FenDBPath, FeatDBPath)
 
-    engine = SimpleStockFish(depth=8)
-    buildLabelDB("fenDB.csv", "gameDB/labelDB.npy", engine.evaluate)
+    engine = SimpleStockFish(depth=Depth)
+    buildLabelDB(FenDBPath, LabelDBPath, engine.evaluate)
 
-    sliceTestData('gameDB/featDB.npy', 'gameDB/trainX.npy', 'gameDB/testX.npy', .2)
-    sliceTestData('gameDB/labelDB.npy', 'gameDB/sfTrainY.npy', 'gameDB/sfTestY.npy', .2)
+    sliceTestData(FeatDBPath, TrainFeatPath, TestFeatPath, .2)
+    sliceTestData(LabelDBPath, TrainLabelPath, TestLabelPath, .2)
 
-    sliceTestBoards('fenDB.csv', 'gameDB/trainBoards.npy', 'gameDB/testBoards.npy', .2)
+    sliceTestBoards(FenDBPath, TrainBoard, TestBoard, .2)

@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from featureDB import *
+from config import *
 
 tf.compat.v1.disable_eager_execution()
 
@@ -116,12 +117,12 @@ class Model(object):
 
 if __name__ == "__main__":
     model = Model()
-    trainDB = FeatureDB('gameDB/trainX.npy', 'gameDB/sfTrainY.npy')
-    testDB = FeatureDB('gameDB/testX.npy', 'gameDB/sfTestY.npy')
+    trainDB = FeatureDB(TrainFeatPath, TrainLabelPath)
+    testDB = FeatureDB(TestFeatPath, TestLabelPath)
     model.setDB(trainDB,testDB)
-    model.train(batchSize=500)
+    model.train(batchSize=BatchSize, epochs=Epochs, displayStep=DisplayStep)
     # print(model.runInput(trainDB.getFeats()))
-    model.save('checkpoints/sfBoot.ckpt')
+    model.save(CheckpointPath)
 
     # model.runInput(s.getBoardFeature())
     # model.buildNetwork(s.getBoardFeature())

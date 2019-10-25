@@ -1,4 +1,5 @@
 import numpy as np
+from config import *
 
 class FeatureDB(object):
     def __init__(self, feature, label = None):
@@ -48,5 +49,5 @@ class FeatureDB(object):
         return self.n
 
 if __name__ == "__main__":
-    trainDB = FeatureDB('gameDB/trainX.npy', 'gameDB/sfTrainY.npy')
+    trainDB = FeatureDB(TrainFeatPath, TrainFeatPath)
     print(trainDB.getFeats())
