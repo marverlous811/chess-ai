@@ -31,15 +31,15 @@ class State(object):
         sqUci = chr(sqIndex[1] + ord('a')) + str(8 - sqIndex[0])
         prefix = 'a1' if sqUci != 'a1' else 'a2'
         sqID = chess.Move.from_uci(sqUci + prefix).from_square
-        color = color if color is not None else board.piece_at(sqID).color
+        color = color if color is not None else self.board.piece_at(sqID).color
 
         lowAtk = 100
         lowDef = 100
         for attSq in self.board.attackers(not color, sqID):
-            piece = board.piece_at(attSq)
+            piece = self.board.piece_at(attSq)
             lowAtk = min(pieceValues[piece.symbol().lower()], lowAtk)
         for defSq in self.board.attackers(color, sqID):
-            piece = board.piece_at(defSq)
+            piece = self.board.piece_at(defSq)
             lowDef = min(pieceValues[piece.symbol().lower()], lowDef)
 
         lowAtk = 0 if lowAtk == 100 else 1.0 / lowAtk
