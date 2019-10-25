@@ -1,27 +1,16 @@
 class ChessBot {
-    constructor(game, board, type){
+    constructor(game, board, type, side){
         this.game = game
         this.board = board
         this.type = type
         this.timeThinking = []
+        this.side = side !== -1 ? true : false
 
         console.log("bot type...",type)
     }
 
-    makeBestMove = () => {
-
-        const start = Date.now()
-        let bestMove = this.getBestMove(this.game)
-        const end = Date.now()
-        const d = end - start
-        this.timeThinking.push(d)
-        
-        renderForAI(bestMove, d)
-        this.game.move(bestMove)
-        this.board.position(this.game.fen())
-        if (this.game.game_over()){
-            console.log("game over ", this.timeThinking)
-        }
+    changeSide = (side) => {
+        this.side = side !== -1 ? true : false
     }
 
     getBestMove = (game) => {
@@ -52,7 +41,7 @@ class ChessBot {
             const tempMove = newGameMoves[i]
             game.move(tempMove)
 
-            let boardValue = (-1) * evaluateBoard(game.board())
+            let boardValue = this.side ? (-1) * evaluateBoard(game.board()) : evaluateBoard(game.board())
             game.undo()
             if (boardValue > bestValue) {
                 bestValue = boardValue
@@ -66,7 +55,7 @@ class ChessBot {
     }
 
     calculateByMinMax = (game) => {
-        let bestMove = nextMove(3, game, true)
+        let bestMove = nextMove(3, game, this.side)
         console.log("best move: ", bestMove)
         return bestMove
     }

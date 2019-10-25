@@ -25,6 +25,15 @@
             <p>time for last move: <span id="time-last-move">0</span>s</p>
         </div>
 
+        <div id="setting">
+            <div id="select-side">
+                <div><input type="radio" name="side" value=0> Black<br></div>
+                <div><input type="radio" name="side" value=-1 checked> White<br></div>
+            </div>
+
+            <button id="start-game">Start</button>
+        </div>
+
         <script src="lib/jquery.min.js"></script>
         <script src="lib/chess.min.js"></script>
         <script src="lib/chessboard-1.0.0.min.js"></script>
@@ -33,5 +42,6 @@
         <script src="js/minimax.js"></script>
         <script src="js/AI.js"></script>
         <script src="js/board.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>

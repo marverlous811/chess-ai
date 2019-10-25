@@ -36,3 +36,11 @@
 .game-play #chess-log #AI li {
     padding: 5 0
 }
+
+#select-side{
+    display: flex;
+}
+
+#select-side > div{
+    padding: 10px;
+}

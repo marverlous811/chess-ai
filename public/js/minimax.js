@@ -5,7 +5,7 @@ const defaultBeta = 10000
 function miniMax(depth, game, alpha, beta, isMaximissingPlayer){
 	if (depth === 0){
         // console.log("last node: ", evaluateBoard(game.board()))
-		return (-1) * evaluateBoard(game.board())
+		return isMaximissingPlayer ? (-1) * evaluateBoard(game.board()) : evaluateBoard(game.board())
     }
     
     const gameMoves = game.moves()
@@ -40,16 +40,20 @@ function miniMax(depth, game, alpha, beta, isMaximissingPlayer){
 
 function nextMove(depth, game, isMaximissingPlayer){
 	let bestMove = null
-	let bestMoveValue = -defaultBestValue
+	let bestMoveValue = isMaximissingPlayer ? -defaultBestValue : defaultBestValue
 
 	const gameMoves = game.moves()
 	for (let i = 0; i < gameMoves.length; i++){
 		game.move(gameMoves[i])
         let predictValue = miniMax(depth - 1, game, defaultAlpha, defaultBeta , !isMaximissingPlayer)
-		if (predictValue >= bestMoveValue){
+		if (isMaximissingPlayer && predictValue >= bestMoveValue){
 			bestMoveValue = predictValue
 			bestMove = gameMoves[i]
-		}
+        }
+        if(!isMaximissingPlayer && predictValue <= bestMoveValue){
+            bestMoveValue = predictValue
+			bestMove = gameMoves[i]
+        }
 		game.undo()
 	}
 	
