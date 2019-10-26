@@ -1,2 +1,4 @@
-const dumbAI = new ChessBot(this.game, this.board, 'minimax', 0)
-window.board = new ChessBoard('myBoard', dumbAI)
+window.board = new ChessManager('myBoard')
+const dumbAI = new ChessBot(board, 'minimax')
+const nnBot = new NeuralBot(board)
+board.setAI(nnBot)

@@ -19,6 +19,6 @@ if __name__ == "__main__":
     argChessString = sys.argv[2]
     board = chess.Board(argChessString)
 
-    board = chess.Board()
+    # board = chess.Board()
     AI = NeuralEngine(depth=3, checkpoints=modelSave)
-    print(AI.makeMove(board))
+    print(AI.makeMove(board,fen=True))

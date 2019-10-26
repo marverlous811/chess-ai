@@ -6,10 +6,14 @@ class ChessEngine(object):
     def __init__(self, depth = 1):
         self.depth = depth
     
-    def makeMove(self, board, moveFunction=None):
+    def makeMove(self, board, moveFunction=None, fen=False):
         move = self. alphabeta(
             board, self.depth, float('-infinity'), float('+infinity')
         )[1]
+        if fen is True:
+            board.push(move)
+            move = board.fen()
+
         if moveFunction is not None:
             moveFunction(move)
         else:

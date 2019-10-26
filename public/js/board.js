@@ -1,5 +1,10 @@
-class ChessBoard{
-    constructor(boardDivID, AI){
+const SIDE = {
+    "WHITE": -1,
+    "BLACK": 0
+}
+
+class ChessManager{
+    constructor(boardDivID){
         this.config = {
             draggable: true,    
             position: 'start',
@@ -8,33 +13,41 @@ class ChessBoard{
             onDrop: this.onDrop,
             onSnapEnd: this.onSnapEnd,
         }
-        this.boardID = boardDivID
-        this.board = Chessboard(this.boardID)
-        this.game =  new Chess()
-        this.AI = AI
-        this.humanSide = -1
-        this.nowSide = -1
+        this.divID = boardDivID
+        this.board = ChessBoard(this.divID)
+        this.game = new Chess()
+        this.human = SIDE.WHITE
+        this.AISide = SIDE.BLACK
+        this.nowSide = SIDE.WHITE
         this.started = false
     }
 
-    changeSide = (value) => {
-        this.AI.changeSide(this.humanSide)
-        this.humanSide = value
-        if(this.started){
-            setTimeout(() => {
-                this.makeBestMove()
-            }, 500)
-        }
+    setAI = (AI) => {
+        this.AI = AI
+        this.AI.changeSide(this.AISide)
     }
 
-    start = () => {
-        this.board = Chessboard(this.boardID, this.config)
+    start = () =>{
+        removeHistory()
+        this.board = Chessboard(this.divID, this.config)
         this.started = true
-        if(this.humanSide !== -1){
+        if(this.human !== -1){
             setTimeout(() => {
-                this.makeBestMove()
+                this.AIMove()
             }, 500)
         }
+
+    }
+
+    changeSide = (value) => {
+        if(this.AI){
+            this.AI.changeSide(this.human)
+            setTimeout(() => {
+                this.AIMove()
+            }, 500)
+        }
+        this.human = SIDE[value.toUpperCase()]
+        console.log("changed side ", this.human)
     }
 
     onMoveEnd = (oldPos, newPos) => {
@@ -46,8 +59,8 @@ class ChessBoard{
     }
 
     onDragStart = (source, piece, position, orientation) => {
-        console.log(piece.search(/^b/), piece.search(/^b/) === this.humanSide)
-        if(this.game.game_over() === true || !(piece.search(/^b/) === this.humanSide)) {
+        console.log(piece.search(/^b/), piece.search(/^b/) === this.human)
+        if(this.game.game_over() === true || !(piece.search(/^b/) === this.human)) {
             return false
         }
     }
@@ -65,30 +78,33 @@ class ChessBoard{
 
         // If illegal move, snapback
         if (move === null) return 'snapback';
-
-        // Log the move
+     
         console.log(move)
-        console.log(this.board.position(this.game.fen()))
-        renderForHuman(this.game.history())
+        this.renderMove()
+        this.nowSide = this.AISide
         setTimeout(() => {
-            if(this.AI) {
-                this.makeBestMove()
-            }
-        }, 500)
+            if(this.AI) this.AIMove()
+        })
     }
 
-    makeBestMove = () => {
-        const start = Date.now()
-        let bestMove = this.AI.getBestMove(this.game)
-        console.log(bestMove)
-        const end = Date.now()
-        const d = end - start
-        
-        renderForAI(bestMove, d)
-        this.game.move(bestMove)
-        this.board.position(this.game.fen())
+    AIMove = async () =>{
+        let bestMove = await this.AI.getBestMove()
+        console.log("AI: move", bestMove)
+        if(!bestMove) return
+        this.board.position(bestMove)
+
+        this.renderMove()
+        this.nowSide = this.human
         if (this.game.game_over()){
-            console.log("game over ", this.timeThinking)
+            console.log("game over")
         }
     }
+
+    renderMove = () => {
+        const moves = this.game.history()
+        console.log(moves)
+        const side = this.nowSide === SIDE.WHITE ? "white" : "black"
+        renderMoveHistory(moves[moves.length - 1], side)
+    }
+
 }

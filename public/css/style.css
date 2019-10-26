@@ -11,7 +11,7 @@
     display: flex;
 }
 
-.game-play #chess-log #human{
+.game-play #chess-log #white{
     padding: 0 20;
     display: flex;
     flex-direction: column;
@@ -19,7 +19,7 @@
 
 }
 
-.game-play #chess-log #AI{
+.game-play #chess-log #black{
     padding: 0 20;
     display: flex;
     flex-direction: column;
@@ -27,13 +27,13 @@
 
 }
 
-.game-play #chess-log #human ul, 
-.game-play #chess-log #AI ul{
+.game-play #chess-log #white ul, 
+.game-play #chess-log #black ul{
     padding: 0
 }
 
-.game-play #chess-log #human li, 
-.game-play #chess-log #AI li {
+.game-play #chess-log #white li, 
+.game-play #chess-log #black li {
     padding: 5 0
 }
 

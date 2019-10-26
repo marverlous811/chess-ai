@@ -1,4 +1,6 @@
 function renderMoveHistory(move, side){
+    return
+    console.log("render: ", move, side)
     let historyElement = $('#'+side).find("ul")
     historyElement.append(`<li>${move}</li>`)   
 }
@@ -8,14 +10,18 @@ function renderForHuman(moves){
     return renderMoveHistory(lastMove, "human")
 }
 
-function renderForAI(move, time){
+function removeHistory(){
+    $("#black").find("ul").empty()
+    $("#white").find("ul").empty()
+}
+
+function renderForAI(time){
     $("#time-last-move").html(time/1000)
-    return renderMoveHistory(move, "AI")
 }
 
 $("input[type=radio][name=side]").change(function(){
     console.log(this.value)
-    window.board.changeSide(parseInt(this.value))
+    window.board.changeSide(this.value)
 })
 
 $("#start-game").click(function(){

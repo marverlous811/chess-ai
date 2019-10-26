@@ -8,18 +8,18 @@
         <h1>Hello world</h1>
         <div class="game-play">
             <div id="myBoard" style="width: 400px"></div>
-            <div id="chess-log">
-                <div id="human">
-                    <span>Human</span>
+            <!-- <div id="chess-log">
+                <div id="white">
+                    <span>white</span>
                     <ul>
                     </ul>
                 </div>
-                <div id="AI">
-                    <span>AI</span>
+                <div id="black">
+                    <span>black</span>
                     <ul>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div id="AI-stat">
             <p>time for last move: <span id="time-last-move">0</span>s</p>
@@ -27,8 +27,8 @@
 
         <div id="setting">
             <div id="select-side">
-                <div><input type="radio" name="side" value=0> Black<br></div>
-                <div><input type="radio" name="side" value=-1 checked> White<br></div>
+                <div><input type="radio" name="side" value="black"> Black<br></div>
+                <div><input type="radio" name="side" value="white" checked> White<br></div>
             </div>
 
             <button id="start-game">Start</button>
@@ -41,6 +41,7 @@
         <script src="js/piece.js"></script>
         <script src="js/minimax.js"></script>
         <script src="js/AI.js"></script>
+        <script src="js/bot/neural.js"></script>
         <script src="js/board.js"></script>
         <script src="js/main.js"></script>
     </body>

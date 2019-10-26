@@ -29,10 +29,10 @@ class Model(object):
         self.sess = tf.compat.v1.Session()
         if restore is not None:
             self.saver.restore(self.sess, restore)
-            print("Checkpoint ", restore, " restored")
+            # print("Checkpoint ", restore, " restored")
         else:
             self.sess.run(self.init)
-            print("initialized variables")
+            # print("initialized variables")
 
     def buildNetwork(self, x):
         feature_init = tf.random_normal_initializer(stddev=0.35)

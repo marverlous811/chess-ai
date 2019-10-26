@@ -1,5 +1,6 @@
 const WebsocketServer = require('ws').Server
 const HttpServer = require('./server')
+const { run } = require('./process')
 
 class Socket{
     constructor(port){
@@ -54,7 +55,21 @@ class SocketClient{
     }
 
     onMessage(msg){
+        console.log(msg)
+        const data = JSON.parse(msg)
+        switch(data.type){
+            case "getMove":
+                this.handle(data.board)
+                break
+            default: break
+        }
+    }
 
+    async handle(board){
+        if(!board) return 
+        let [err, move] = await run(board)
+        console.log(move)
+        this.socket.send(move)
     }
 }
 

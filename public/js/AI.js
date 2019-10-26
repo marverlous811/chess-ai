@@ -1,10 +1,9 @@
 class ChessBot {
-    constructor(game, board, type, side){
-        this.game = game
-        this.board = board
+    constructor(listener, type){
+        this.game = listener.game
+        this.board = listener.board
         this.type = type
         this.timeThinking = []
-        this.side = side !== -1 ? true : false
 
         console.log("bot type...",type)
     }
@@ -13,11 +12,18 @@ class ChessBot {
         this.side = side !== -1 ? true : false
     }
 
-    getBestMove = (game) => {
-        if (game.game_over()) {
+    getBestMove = () => {
+        if (this.game.game_over()) {
             alert('Game over');
+            return
         }
-        return this.calculateBestMove(game);
+        const begin = Date.now()
+        const move = this.calculateBestMove(this.game);
+        const end = Date.now()
+        this.timeThinking.push((end - begin))
+        renderForAI((end - begin))
+        this.game.move(move)
+        return this.game.fen()
     }
 
     calculateBestMove = (game) =>{
